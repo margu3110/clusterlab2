@@ -3,8 +3,8 @@ locals {
 }
 
 ### Create security Group
-resource "aws_security_group" "deployer-sg" {
-  name        = "deployer security group"
+resource "aws_security_group" "ec2-sg" {
+  name        = "ec2 security group"
   description = "Allow access to port 22"
   vpc_id      = var.vpc_id
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "deployer-sg" {
   }
 
   tags = {
-    Name = "deployer-sg"
+    Name = "ec2-sg"
     appName = var.appName
   }
 }

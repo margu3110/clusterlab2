@@ -11,9 +11,12 @@ resource "aws_iam_policy" "ec2_iam_policy" {
           "secretsmanager:GetSecretValue",
           "ssm:GetParameter",
           "ssm:GetParameters",
-          "ssm:GetParametersByPath"
+          "ssm:GetParametersByPath",
+          "sts:AssumeRole"
         ]
-        Resource = "*"
+        Resource = [
+          "arn:aws:iam::471112762020:role/cluster-admin-iam-role"
+      ]
       }
     ]
   })
