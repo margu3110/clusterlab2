@@ -22,3 +22,18 @@ variable "project_tag" {
     type    = string
     default = "clusterlab2"
 }
+
+variable "eks_role_name" {
+    type    = string
+    default = "ec2ClusterAdminRole"
+}
+
+variable "ec2_role_name" {
+    type    = string
+    default = "devOpsRole"
+}
+
+variable "ec2_name" {
+    type    = string
+    default = "clusterAdmin"
+}

@@ -1,22 +1,3 @@
-terraform {
-    required_providers {
-        aws = {
-            source  = "hashicorp/aws"        
-            version = "~> 5.0"
-        }
-    }
-}
-provider "aws" {
-    region  = "us-east-1"
-    alias   = "clusteradmin"
-    profile = "terraform-elrond"
-}
-
-provider "aws" {
-    region  = "us-east-1"
-    profile = "terraform-aragorn"
-}
-
 data "aws_vpc" "default_vpc" {
   provider  = aws.clusteradmin
   default   = true
@@ -43,14 +24,16 @@ module "iam_instance_profile" {
   source                = "./iam/admin_role"
   instance_profile_name = "instanceProfileDevops"
   iam_policy_name       = "devOpsPolicy"
-  role_name             = "devOpsRole"
+  role_name             = var.ec2_role_name
+  eks_cross_role_name   = var.eks_role_name
 }
 
 # Terraform module Block to create the iam role for clusteradmin on the eks account
 module "iam_eks_role" {
-  source      = "./iam/eks_role"
-  role_name   = "ec2ClusterAdminRole"
-  project_tag = var.project_tag
+  source              = "./iam/eks_role"
+  role_name           = var.eks_role_name
+  ec2_cross_role_name = var.ec2_role_name
+  project_tag         = var.project_tag
 }
 
 # Terraform module Block to create EC2 (kubectl)
@@ -60,7 +43,7 @@ module "ec2" {
   }
 
   source            = "./ec2"
-  ec2_name          = "clusterAdmin"
+  ec2_name          = var.ec2_name
   key_name          = var.key_name
   ami               = var.ami
   instance_type     = var.instance_type

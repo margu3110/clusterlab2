@@ -16,7 +16,7 @@ resource "aws_iam_policy" "ec2_iam_policy" {
           "sts:AssumeRole"
         ]
         Resource = [
-          "arn:aws:iam::471112762020:role/ec2ClusterAdminRole"
+          "arn:aws:iam::471112762020:role/${var.eks_cross_role_name}"
       ]
       }
     ]

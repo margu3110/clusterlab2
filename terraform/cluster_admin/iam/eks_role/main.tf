@@ -12,7 +12,7 @@ resource "aws_iam_role" "eksClusterRole" {
         {
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::126327985977:role/devOpsRole"
+                "AWS": "arn:aws:iam::126327985977:role/${var.ec2_cross_role_name}"
             },
             "Action": "sts:AssumeRole",
             "Condition": {}
@@ -26,4 +26,10 @@ POLICY
 resource "aws_iam_role_policy_attachment" "clusterLab2-AmazonEKSClusterPolicy" {
   role        = aws_iam_role.eksClusterRole.name
   policy_arn  = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+# S3 policy attachment
+resource "aws_iam_role_policy_attachment" "clusterLab2-AmazonS3FullAccess" {
+  role        = aws_iam_role.eksClusterRole.name
+  policy_arn  = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }

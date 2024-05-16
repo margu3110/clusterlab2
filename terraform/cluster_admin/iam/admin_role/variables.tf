@@ -10,5 +10,8 @@ variable "iam_policy_name" {
 
 variable "role_name" {
   type    = string
-  default = "devops-role"
+}
+
+variable "eks_cross_role_name" {
+  type    = string
 }
