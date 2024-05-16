@@ -1,6 +1,7 @@
 # Create an IAM policy
 resource "aws_iam_policy" "ec2_iam_policy" {
-  name = var.iam_policy_name
+  name      = var.iam_policy_name
+  provider  = aws.clusteradmin
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -15,7 +16,7 @@ resource "aws_iam_policy" "ec2_iam_policy" {
           "sts:AssumeRole"
         ]
         Resource = [
-          "arn:aws:iam::471112762020:role/cluster-admin-iam-role"
+          "arn:aws:iam::471112762020:role/ec2ClusterAdminRole"
       ]
       }
     ]
@@ -24,7 +25,8 @@ resource "aws_iam_policy" "ec2_iam_policy" {
 
 # Create the IAM role
 resource "aws_iam_role" "ec2_role" {
-  name = var.role_name
+  name      = var.role_name
+  provider  = aws.clusteradmin
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -42,13 +44,15 @@ resource "aws_iam_role" "ec2_role" {
 
 # Attach the IAM policy to the IAM role
 resource "aws_iam_policy_attachment" "ec2_role_policy_attachment" {
-  name = "Policy Attachement"
-  policy_arn = aws_iam_policy.ec2_iam_policy.arn
+  provider  = aws.clusteradmin
+  name        = "Policy Attachement"
+  policy_arn  = aws_iam_policy.ec2_iam_policy.arn
   roles       = [aws_iam_role.ec2_role.name]
 }
 
 # Create an IAM instance profile
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = var.instance_profile_name
-  role = aws_iam_role.ec2_role.name
+  provider  = aws.clusteradmin
+  name      = var.instance_profile_name
+  role      = aws_iam_role.ec2_role.name
 }

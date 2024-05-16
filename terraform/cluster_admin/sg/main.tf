@@ -4,6 +4,7 @@ locals {
 
 ### Create security Group
 resource "aws_security_group" "ec2-sg" {
+  provider    = aws.clusteradmin
   name        = "ec2 security group"
   description = "Allow access to port 22"
   vpc_id      = var.vpc_id

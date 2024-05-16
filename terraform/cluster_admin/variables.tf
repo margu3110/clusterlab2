@@ -17,3 +17,8 @@ variable "key_name" {
     type    = string
     default = "elrond"
 }
+
+variable "project_tag" {
+    type    = string
+    default = "clusterlab2"
+}
