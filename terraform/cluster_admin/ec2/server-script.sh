@@ -14,7 +14,7 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscl
 unzip awscliv2.zip
 sudo ./aws/install
 # install kubectl
-su - ec2-user -c 'cd ~;curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.0/2024-01-04/bin/linux/amd64/kubectl'
+su - ec2-user -c 'cd ~;curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.15/2023-01-11/bin/linux/amd64/kubectl'
 su - ec2-user -c 'cd ~;chmod +x ./kubectl;mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH'
 # install eksctl
 su - ec2-user -c 'cd ~;curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp'
